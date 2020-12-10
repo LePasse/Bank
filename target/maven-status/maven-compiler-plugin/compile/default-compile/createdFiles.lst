@@ -1,0 +1,8 @@
+DAO\AdministratorDAO.class
+entity\Client.class
+entity\Account.class
+DAO\ClientDAO.class
+entity\Administrator.class
+DAO\CardDAO.class
+controller\MainController.class
+entity\Card.class
