@@ -1,7 +1,10 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import DAO.sql.UserDAOSQL;
+import service.UserService;
 
 public class User {
 
@@ -17,7 +20,7 @@ public class User {
     public final Role role;
     public final String passwordHash;
 
-    public ArrayList<Card> Cards;
+    public List<Card> cards;
 
     public User(int id, String name, String surname, String email, Role role, String passwordHash) {
         this.id = id;
@@ -26,6 +29,12 @@ public class User {
         this.email = email;
         this.passwordHash = passwordHash;
         this.role = role;
+        this.cards = null;
+        try {
+            this.cards = new UserDAOSQL().getCards(this.id);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public User(String name, String surname, String email, String passwordHash) {
@@ -35,5 +44,11 @@ public class User {
         this.email = email;
         this.passwordHash = passwordHash;
         this.role = Role.CUSTOMER;
+        this.cards = null;
+        try {
+            this.cards = new UserDAOSQL().getCards(this.id);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

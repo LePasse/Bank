@@ -1,6 +1,7 @@
 package DAO.sql;
 
 import DAO.UserDAO;
+import entity.Card;
 import entity.User;
 import utils.DBConnection;
 
@@ -63,25 +64,39 @@ public class UserDAOSQL implements UserDAO {
     }
 
     @Override
-    public List<User> getUsers() throws Exception {
+    public List<Card> getCards(int id) throws Exception {
         Connection connection = DBConnection.connect();
 
         try {
-            List<User> users = new ArrayList<>();
+            PreparedStatement query = connection.prepareStatement("SELECT * FROM association WHERE userID LIKE ?");
+            // get card ids
+            List<Integer> ids = new ArrayList<>();
 
-            PreparedStatement query = connection.prepareStatement("SELECT * FROM user");
+            query.setString(1, Integer.toString(id));
             ResultSet result = query.executeQuery();
+
             while (result.next()) {
-                int _id = result.getInt(1);
-                String _name = result.getString(2);
-                String _surname = result.getString(3);
-                String _email = result.getString(4);
-                User.Role _role = User.Role.valueOf(result.getString(5).toUpperCase());
-                String _passwordHash = result.getString(6);
-               users.add(new User(_id, _name, _surname, _email, _role,  _passwordHash));
+                int _id = result.getInt(3);
+                ids.add(_id);
             }
 
-            return users;
+            List<Card> cards = new ArrayList<>();
+            //get cards
+            for (int ID: ids) {
+                query = connection.prepareStatement("SELECT * FROM card WHERE id LIKE ?");
+                query.setString(1, Integer.toString(ID));
+                result = query.executeQuery();
+
+                while (result.next()) {
+                    int _id = result.getInt(1);
+                    String _number = result.getString(2);
+                    String _date = result.getString(3);
+                    String _name = result.getString(4);
+                    cards.add(new Card(_id, _number, _date, _name));
+                }
+            }
+
+            return cards;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -114,4 +129,5 @@ public class UserDAOSQL implements UserDAO {
     public boolean isUserExists(String email) throws Exception {
         return getUserByEmail(email) != null;
     }
+
 }

@@ -1,11 +1,19 @@
 package entity;
 
 public class Account {
-    public final String Number;
-    public final double Balance;
+    public final Integer id;
+    public final String number;
+    public final double balance;
+
+    public Account(int id, String number, double balance) {
+        this.id = id;
+        this.number = number;
+        this.balance = balance;
+    }
 
     public Account(String number, double balance) {
-        this.Number = number;
-        this.Balance = balance;
+        this.id = null;
+        this.number = number;
+        this.balance = balance;
     }
 }

@@ -1,4 +1,5 @@
 <%@ page import="entity.User" %>
+<%@ page import="entity.Card" %>
 <%@ page import="DAO.sql.UserDAOSQL" %>
 <%@ page import="service.UserService" %>
 <%@ page import="java.util.List" %>
@@ -29,5 +30,17 @@
                 "    </form>");
     }
 %>
+<h1>Crews</h1>
+<%
+    //Cards
+    if (user != null){
+        List<Card> cards = user.cards;
+        for (Card card : cards) {
+            out.print("<p>Card " + card.name + " (" + card.date + ")</p>");
+            out.print("<p>Balance " + card.account.balance +".</p>");
+        }
+    }
+%>
+
 </body>
 </html>

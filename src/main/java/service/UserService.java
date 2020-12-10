@@ -1,6 +1,7 @@
 package service;
 
 import DAO.sql.UserDAOSQL;
+import entity.Card;
 import entity.User;
 
 import java.util.List;
