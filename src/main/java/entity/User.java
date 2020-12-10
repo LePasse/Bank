@@ -10,9 +10,9 @@ public class User {
         CUSTOMER
     }
 
-    public final int id;
-    public final String Name;
-    public final String Surname;
+    public final Integer id;
+    public final String name;
+    public final String surname;
     public final String email;
     public final Role role;
     public final String passwordHash;
@@ -21,17 +21,17 @@ public class User {
 
     public User(int id, String name, String surname, String email, Role role, String passwordHash) {
         this.id = id;
-        this.Name = name;
-        this.Surname = surname;
+        this.name = name;
+        this.surname = surname;
         this.email = email;
         this.passwordHash = passwordHash;
         this.role = role;
     }
 
-    public User(int id, String name, String surname, String email, String passwordHash) {
-        this.id = id;
-        this.Name = name;
-        this.Surname = surname;
+    public User(String name, String surname, String email, String passwordHash) {
+        this.id = null;
+        this.name = name;
+        this.surname = surname;
         this.email = email;
         this.passwordHash = passwordHash;
         this.role = Role.CUSTOMER;
