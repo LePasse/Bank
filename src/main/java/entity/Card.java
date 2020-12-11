@@ -12,12 +12,15 @@ public class Card {
     public final String name;
     public final Account account;
 
-    public Card(int id, String number, String date, String name) {
+    public boolean blocked;
+
+    public Card(int id, String number, String date, String name, boolean blocked) {
         this.id = id;
         this.number = number;
         this.date = date;
         this.name = name;
         this.account = new Account(generateNumber(),0);
+        this.blocked = blocked;
     }
     public Card(String number, String date, String name) {
         this.id = 0;
@@ -25,13 +28,14 @@ public class Card {
         this.date = date;
         this.name = name;
         this.account = new Account(generateNumber(),0);
+        this.blocked = false;
     }
 
     public String generateNumber() {
         int leftLet = 65;
         int rightLet = 90;
-        int leftLimit = 48; // letter 'a'
-        int rightLimit = 57; // letter 'z'
+        int leftLimit = 48;
+        int rightLimit = 57;
         int letLength = 5;
         int numLength = 15;
         Random random = new Random();

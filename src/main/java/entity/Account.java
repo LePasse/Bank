@@ -3,7 +3,7 @@ package entity;
 public class Account {
     public final Integer id;
     public final String number;
-    public final double balance;
+    public double balance;
 
     public Account(int id, String number, double balance) {
         this.id = id;

@@ -50,8 +50,20 @@ public class MainController extends HttpServlet {
                 req.getSession().invalidate();
                 break;
             }
-            case "pay": {
-
+            case "transaction": {
+                
+                break;
+            }
+            case "block": {
+                String card = req.getParameter("card");
+                int id = Integer.parseInt(card);
+                try {
+                    new CardDAOSQL().block(id);
+                    User user = (User) req.getSession().getAttribute("user");
+                    user.cards = new UserDAOSQL().getCards(user.id);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
             }
             default: {

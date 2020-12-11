@@ -3,24 +3,14 @@
 -- Model: New Model    Version: 1.0
 -- MySQL Workbench Forward Engineering
 
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+/*SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;*/
+/*SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;*/
+/*SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';*/
 
 -- -----------------------------------------------------
--- Schema bank
+-- Table `user`
 -- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema bank
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `bank` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
-USE `bank` ;
-
--- -----------------------------------------------------
--- Table `bank`.`user`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bank`.`user` (
+CREATE TABLE IF NOT EXISTS `user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(128) NULL DEFAULT NULL,
   `surname` VARCHAR(128) NULL DEFAULT NULL,
@@ -28,62 +18,47 @@ CREATE TABLE IF NOT EXISTS `bank`.`user` (
   `role` VARCHAR(128) NULL DEFAULT NULL,
   `password_hash` CHAR(64) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
--- Table `bank`.`account`
+-- Table `account`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bank`.`account` (
+CREATE TABLE IF NOT EXISTS `account` (
   `id` INT NOT NULL,
   `number` VARCHAR(128) NULL DEFAULT NULL,
   `balance` DOUBLE NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `bank`.`card`
+-- Table `card`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bank`.`card` (
+CREATE TABLE IF NOT EXISTS `card` (
   `id` INT NOT NULL,
   `accountID` INT NULL,
   `number` VARCHAR(16) NULL,
   `date` VARCHAR(5) NULL,
   `name` VARCHAR(64) NULL,
+  `blocked` VARCHAR(64) NULL,
   PRIMARY KEY (`id`),
-  INDEX `accountID_idx` (`accountID` ASC) VISIBLE,
-  CONSTRAINT `accountID`
-    FOREIGN KEY (`accountID`)
-    REFERENCES `bank`.`account` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
+  KEY `accountID` (`accountID`),
+  CONSTRAINT `accountID` FOREIGN KEY (`accountID`) REFERENCES `account` (`id`))
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- -----------------------------------------------------
--- Table `bank`.`association`
+-- Table `association`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bank`.`association` (
+CREATE TABLE IF NOT EXISTS `association` (
   `id` INT NOT NULL,
   `userID` INT NULL,
   `cardID` INT NULL,
   PRIMARY KEY (`id`),
-  INDEX `cardID_idx` (`cardID` ASC) VISIBLE,
-  INDEX `userID_idx` (`userID` ASC) VISIBLE,
-  CONSTRAINT `userID`
-    FOREIGN KEY (`userID`)
-    REFERENCES `bank`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `cardID`
-    FOREIGN KEY (`cardID`)
-    REFERENCES `bank`.`card` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+  KEY `userID` (`userID`),
+  KEY `cardID` (`cardID`),
+  CONSTRAINT `userID` FOREIGN KEY (`userID`) REFERENCES `bank`.`user` (`id`),
+  CONSTRAINT `cardID` FOREIGN KEY (`cardID`) REFERENCES `bank`.`card` (`id`))
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

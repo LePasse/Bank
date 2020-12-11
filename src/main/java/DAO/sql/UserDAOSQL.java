@@ -92,7 +92,8 @@ public class UserDAOSQL implements UserDAO {
                     String _number = result.getString(2);
                     String _date = result.getString(3);
                     String _name = result.getString(4);
-                    cards.add(new Card(_id, _number, _date, _name));
+                    String _blocked = result.getString(5);
+                    cards.add(new Card(_id, _number, _date, _name, Boolean.parseBoolean(_blocked)));
                 }
             }
 

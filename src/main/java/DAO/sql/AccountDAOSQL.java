@@ -78,4 +78,25 @@ public class AccountDAOSQL implements AccountDAO {
     public boolean isAccountExists(String number) throws Exception {
         return getAccountByNumber(number) != null;
     }
+
+    @Override
+    public boolean increaseBalance(int id, Double amount) throws Exception {
+        Connection connection = DBConnection.connect();
+
+        Account account = new AccountDAOSQL().getAccountByID(id);
+
+        try {
+            account.balance += amount;
+            PreparedStatement addUserQuery = connection.prepareStatement("UPDATE account (number,balance) VALUES (?, ?)");
+
+            addUserQuery.setString(1, account.number);
+            addUserQuery.setString(2, String.valueOf(account.balance));
+            addUserQuery.execute();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }
