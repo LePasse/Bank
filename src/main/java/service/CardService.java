@@ -45,6 +45,17 @@ public class CardService {
         return false;
     }
 
+    public static boolean increaseBalance(int id, double amount){
+        try{
+            Card card = new CardDAOSQL().getCardByID(id);
+            card.account.balance += amount;
+            AccountService.increaseBalance(card.account.id,amount);
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
     public static String generateNumber(){
         int leftLimit = 48;
         int rightLimit = 57;

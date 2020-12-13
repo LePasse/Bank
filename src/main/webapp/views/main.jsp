@@ -33,10 +33,12 @@
 <%
     //Cards
     if (user != null){
-        out.print("<h1>Cards</h1>" +
+        out.print("<h1>Cards</h1>");
+        //card creation
+        out.print("<form action=\"" + request.getContextPath() + "\" method=\"post\">\n" +
                 "<p>\n" +
-                "        <a href=\"createCard\">Create Card</a>\n" +
-                "    </p>\n");
+                "        <a href=\"CreateCard\">Create Card</a>\n" +
+                "</p>\n");
         List<Card> cards = user.cards;
         for (Card card : cards) {
             out.print("<p>Card " + card.name + " (" + card.date + ")</p>");
@@ -54,11 +56,14 @@
                     " <input type=\"submit\" value=\"Block\"/>\n" +
                     "    </form>");
 
-            //card creation
-            out.print("<form action=\"" + request.getContextPath() + "\" method=\"post\">\n" +
-                    "<p>\n" +
-                    "        <a href=\"CreateCard\">Create Card</a>\n" +
-                    "</p>\n");
+            out.print("Card account balance refill<form action=\"" + request.getContextPath() + "\" method=\"post\">\n" +
+                    "  <input type=\"amount\" name=\"amount\" required/>"+
+                    " <input type=\"hidden\" name=\"card\" value=\"" + card.id + "\" hidden/>\n" +
+                    " <input type=\"hidden\" name=\"action\" value=\"refill\" hidden/>\n" +
+
+                    " <input type=\"submit\" value=\"Refill\"/>\n" +
+                    "    </form>");
+
         }
         if (user.role == User.Role.ADMIN){
             out.print("<form action=\"" + request.getContextPath() + "\" method=\"post\">\n" +

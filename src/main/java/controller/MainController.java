@@ -56,7 +56,22 @@ public class MainController extends HttpServlet {
                 try {
                     Card card = new CardDAOSQL().getCardByNumber(number);
                     new CardDAOSQL().unblock(card.id);
+                    User user = (User) req.getSession().getAttribute("user");
+                    user.cards = new UserDAOSQL().getCards(user.id);
                 } catch (Exception e){
+                    e.printStackTrace();
+                }
+                break;
+            }
+            case "refill": {
+                String card = req.getParameter("card");
+                String amount = req.getParameter("amount");
+                try {
+                    boolean result = CardService.increaseBalance(Integer.parseInt(card),Double.parseDouble(amount));
+
+                    User user = (User) req.getSession().getAttribute("user");
+                    user.cards = new UserDAOSQL().getCards(user.id);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 break;
