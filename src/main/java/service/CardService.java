@@ -36,8 +36,8 @@ public class CardService {
             if (!from.blocked && from.account.balance>=amount){
                 new AccountDAOSQL().decreaseBalance(from.account.id,amount);
                 new AccountDAOSQL().increaseBalance(to.account.id, amount);
-
-
+                from.account.balance -= amount;
+                to.account.balance += amount;
             }
         } catch (Exception e) {
             e.printStackTrace();

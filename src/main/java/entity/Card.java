@@ -1,6 +1,7 @@
 package entity;
 
 import DAO.sql.AccountDAOSQL;
+import DAO.sql.CardDAOSQL;
 import entity.Account;
 
 import java.nio.charset.Charset;
@@ -11,7 +12,7 @@ public class Card {
     public final String number;
     public final String date;
     public final String name;
-    public final Account account;
+    public Account account;
 
     public boolean blocked;
 
@@ -20,7 +21,11 @@ public class Card {
         this.number = number;
         this.date = date;
         this.name = name;
-        this.account = new AccountDAOSQL().getAccountByID();
+        try {
+            this.account = new AccountDAOSQL().getAccountByID(new CardDAOSQL().getAccountID(id));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.blocked = blocked;
     }
     public Card(String number, String date, String name) {

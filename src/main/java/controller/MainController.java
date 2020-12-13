@@ -1,5 +1,6 @@
 package controller;
 
+import DAO.CardDAO;
 import DAO.sql.CardDAOSQL;
 import DAO.sql.AccountDAOSQL;
 import DAO.sql.UserDAOSQL;
@@ -50,8 +51,14 @@ public class MainController extends HttpServlet {
                 req.getSession().invalidate();
                 break;
             }
-            case "transaction": {
-                
+            case "unblock": {
+                String number = req.getParameter("number");
+                try {
+                    Card card = new CardDAOSQL().getCardByNumber(number);
+                    new CardDAOSQL().unblock(card.id);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
                 break;
             }
             case "block": {

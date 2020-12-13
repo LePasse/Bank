@@ -80,6 +80,27 @@ public class CardDAOSQL implements CardDAO {
     }
 
     @Override
+    public boolean unblock(int id) throws Exception {
+        Connection connection = DBConnection.connect();
+        Card card = new CardDAOSQL().getCardByID(id);
+        try {
+            card.blocked = false;
+            PreparedStatement addUserQuery = connection.prepareStatement("UPDATE card (accountID, number, date, name, blocked) VALUES (?, ?, ?, ?, ?)");
+            addUserQuery.setString(1, String.valueOf(card.account.id));
+            addUserQuery.setString(2, card.number);
+            addUserQuery.setString(3, card.date);
+            addUserQuery.setString(4, card.name);
+            addUserQuery.setString(5, String.valueOf(card.blocked));
+            addUserQuery.execute();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Override
     public Card getCardByNumber(String number) throws Exception {
         Connection connection = DBConnection.connect();
         try {
@@ -99,5 +120,22 @@ public class CardDAOSQL implements CardDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public int getAccountID(int cardID) throws Exception {
+        Connection connection = DBConnection.connect();
+        try {
+            PreparedStatement query = connection.prepareStatement("SELECT * FROM card WHERE id LIKE ?");
+            query.setString(1, String.valueOf(cardID));
+
+            ResultSet result = query.executeQuery();
+            if (result.next()) {
+                return result.getInt(1);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return 0;
     }
 }
