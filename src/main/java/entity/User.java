@@ -45,10 +45,5 @@ public class User {
         this.passwordHash = passwordHash;
         this.role = Role.CUSTOMER;
         this.cards = null;
-        try {
-            this.cards = new UserDAOSQL().getCards(this.id);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
     }
 }

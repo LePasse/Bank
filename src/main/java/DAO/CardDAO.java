@@ -7,4 +7,5 @@ public interface CardDAO {
     boolean block(int id) throws Exception;
     Card getCardByID(int id) throws Exception;
     Card getCardByNumber(String number) throws Exception;
+    int getAccountID(int cardID) throws Exception;
 }

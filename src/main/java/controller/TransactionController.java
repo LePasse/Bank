@@ -4,6 +4,7 @@ import DAO.sql.CardDAOSQL;
 import DAO.sql.UserDAOSQL;
 import entity.Card;
 import entity.User;
+import service.CardService;
 import service.UserService;
 import utils.Hash;
 
@@ -34,7 +35,7 @@ public class TransactionController extends HttpServlet {
         try {
             Card from = new CardDAOSQL().getCardByID(id);
             Card to = new CardDAOSQL().getCardByNumber(number);
-
+            CardService.transaction(from,to,amount);
         } catch (Exception e) {
             e.printStackTrace();
         }

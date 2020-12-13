@@ -4,6 +4,7 @@ import DAO.sql.CardDAOSQL;
 import DAO.sql.UserDAOSQL;
 import entity.Card;
 import entity.User;
+import service.CardService;
 import service.UserService;
 import utils.Hash;
 
@@ -26,9 +27,12 @@ public class CreateCardController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //add card creation
+        String cardname = req.getParameter("cardname");
         try {
-
-
+            User user = (User) req.getSession().getAttribute("user");
+            if (user != null) {
+                boolean result = CardService.createCard(user.id, cardname);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

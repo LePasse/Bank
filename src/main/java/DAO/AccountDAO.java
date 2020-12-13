@@ -8,4 +8,5 @@ public interface AccountDAO {
     boolean isAccountExists(String number) throws Exception;
     Account getAccountByNumber(String number) throws Exception;
     boolean increaseBalance(int id, Double amount) throws Exception;
+    boolean decreaseBalance(int id, Double amount) throws Exception;
 }

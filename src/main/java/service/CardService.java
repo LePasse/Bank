@@ -1,6 +1,7 @@
 package service;
 
 import DAO.sql.AccountDAOSQL;
+import DAO.sql.AssociationDAOSQL;
 import DAO.sql.CardDAOSQL;
 import DAO.sql.UserDAOSQL;
 import entity.Account;
@@ -12,20 +13,36 @@ import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 public class CardService {
-    public static Card createCard(int userID, String name) {
+    public static boolean createCard(int userID, String name) {
         try {
             User user = new UserDAOSQL().getUserByID(userID);
             Card card = new Card(generateNumber(),generateDate(),name);
 
             new CardDAOSQL().addCard(card);
             new AccountDAOSQL().addAccount(card.account);
+            new AssociationDAOSQL().addAssociation(user.id, card.id);
 
             user.cards.add(card);
-
+            return true;
             } catch (Exception exception) {
             exception.printStackTrace();
         }
-        return null;
+        return false;
+    }
+
+    public static boolean transaction(Card from, Card to, String am){
+        try {
+            double amount = Double.parseDouble(am);
+            if (!from.blocked && from.account.balance>=amount){
+                new AccountDAOSQL().decreaseBalance(from.account.id,amount);
+                new AccountDAOSQL().increaseBalance(to.account.id, amount);
+
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static String generateNumber(){

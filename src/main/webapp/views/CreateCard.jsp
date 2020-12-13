@@ -1,19 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Card creation</title>
 </head>
-добавить страницу создания карты
 <body>
 <form action="<%= request.getContextPath() %>" method="post">
     <table>
         <tr>
-            <td>Email</td>
-            <td><input type="email" name="email" required/></td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td><input type="password" name="password" required/></td>
+            <td>Enter card name</td>
+            <td><input type="cardname" name="cardname" required/></td>
         </tr>
     </table>
     <input type="submit" value="Submit" />

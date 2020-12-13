@@ -33,4 +33,19 @@ public class AssociationDAOSQL implements AssociationDAO {
         }
         return null;
     }
+
+    @Override
+    public boolean addAssociation(int userID, int cardID) throws Exception {
+        Connection connection = DBConnection.connect();
+        try {
+            PreparedStatement query = connection.prepareStatement("INSERT INTO association (userID, cardID) VALUES (?, ?)");
+            query.setString(1, String.valueOf(userID));
+            query.setString(2, String.valueOf(cardID));
+            query.execute();
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

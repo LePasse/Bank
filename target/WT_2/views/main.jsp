@@ -29,15 +29,53 @@
                 " <input type=\"submit\" value=\"Log Out\"/>\n" +
                 "    </form>");
     }
+    out.print("<form action=\"" + request.getContextPath() + "\" method=\"post\">\n" +
+            " <input type=\"hidden\" name=\"card\" value=\"" + 1 + "\" hidden/>\n" +
+            "<p>\n" +
+            "        <a href=\"transaction\">Transaction</a>\n" +
+            "</p>\n");
+    out.print("<form action=\"" + request.getContextPath() + "\" method=\"post\">\n" +
+            " <input type=\"hidden\" name=\"action\" value=\"block\" hidden/>\n" +
+            " <input type=\"hidden\" name=\"card\" value=\"" + 1 + "\" hidden/>\n" +
+            " <input type=\"submit\" value=\"Block\"/>\n" +
+            "    </form>");
 %>
-<h1>Crews</h1>
+<h1>Cards</h1>
 <%
     //Cards
     if (user != null){
+        out.print("<p>\n" +
+                "        <a href=\"createCard\">Create Card</a>\n" +
+                "    </p>\n");
         List<Card> cards = user.cards;
         for (Card card : cards) {
             out.print("<p>Card " + card.name + " (" + card.date + ")</p>");
             out.print("<p>Balance " + card.account.balance +".</p>");
+
+            //transaction
+            out.print("<form action=\"" + request.getContextPath() + "\" method=\"post\">\n" +
+                    " <input type=\"hidden\" name=\"card\" value=\"" + card.id + "\" hidden/>\n" +
+                    "<p>\n" +
+                    "        <a href=\"transaction\">Transaction</a>\n" +
+                    "</p>\n");
+            out.print("<form action=\"" + request.getContextPath() + "\" method=\"post\">\n" +
+                    " <input type=\"hidden\" name=\"action\" value=\"block\" hidden/>\n" +
+                    " <input type=\"hidden\" name=\"card\" value=\"" + card.id + "\" hidden/>\n" +
+                    " <input type=\"submit\" value=\"Block\"/>\n" +
+                    "    </form>");
+
+            //card creation
+            out.print("<form action=\"" + request.getContextPath() + "\" method=\"post\">\n" +
+                    "<p>\n" +
+                    "        <a href=\"CreateCard\">Create Card</a>\n" +
+                    "</p>\n");
+        }
+        if (user.role == User.Role.ADMIN){
+            out.print("<form action=\"" + request.getContextPath() + "\" method=\"post\">\n" +
+                    " <input type=\"hidden\" name=\"action\" value=\"unblock\" hidden/>\n" +
+
+                    " <input type=\"submit\" value=\"Unblock\"/>\n" +
+                    "    </form>");
         }
     }
 %>

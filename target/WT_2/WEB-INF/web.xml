@@ -28,13 +28,25 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>SignUpController</servlet-name>
-    <servlet-class>controller.SignUpController</servlet-class>
+    <servlet-name>TransactionController</servlet-name>
+    <servlet-class>controller.TransactionController</servlet-class>
   </servlet>
 
   <servlet-mapping>
-    <servlet-name>SignUpController</servlet-name>
-    <url-pattern>/signUp</url-pattern>
+    <servlet-name>TransactionController</servlet-name>
+    <url-pattern>/transaction</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>CreateCardController</servlet-name>
+    <servlet-class>controller.CreateCardController</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>CreateCardController</servlet-name>
+    <url-pattern>/CreateCard</url-pattern>
+  </servlet-mapping>
+
+
 
 </web-app>
