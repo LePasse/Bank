@@ -62,7 +62,7 @@
         }
         if (user.role == User.Role.ADMIN){
             out.print("<form action=\"" + request.getContextPath() + "\" method=\"post\">\n" +
-                    "<input type=\"number\" name=\"number\" required/>" +
+                    " Card number <input type=\"number\" name=\"number\" required/>"+
                     " <input type=\"hidden\" name=\"action\" value=\"unblock\" hidden/>\n" +
 
                     " <input type=\"submit\" value=\"Unblock\"/>\n" +

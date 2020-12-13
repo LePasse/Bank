@@ -30,21 +30,17 @@
                 "    </form>");
     }
     out.print("<form action=\"" + request.getContextPath() + "\" method=\"post\">\n" +
-            " <input type=\"hidden\" name=\"card\" value=\"" + 1 + "\" hidden/>\n" +
-            "<p>\n" +
-            "        <a href=\"transaction\">Transaction</a>\n" +
-            "</p>\n");
-    out.print("<form action=\"" + request.getContextPath() + "\" method=\"post\">\n" +
-            " <input type=\"hidden\" name=\"action\" value=\"block\" hidden/>\n" +
-            " <input type=\"hidden\" name=\"card\" value=\"" + 1 + "\" hidden/>\n" +
-            " <input type=\"submit\" value=\"Block\"/>\n" +
+            " Card number <input type=\"number\" name=\"number\" required/>"+
+            " <input type=\"hidden\" name=\"action\" value=\"unblock\" hidden/>\n" +
+
+            " <input type=\"submit\" value=\"Unblock\"/>\n" +
             "    </form>");
 %>
-<h1>Cards</h1>
 <%
     //Cards
     if (user != null){
-        out.print("<p>\n" +
+        out.print("<h1>Cards</h1>" +
+                "<p>\n" +
                 "        <a href=\"createCard\">Create Card</a>\n" +
                 "    </p>\n");
         List<Card> cards = user.cards;
@@ -72,6 +68,7 @@
         }
         if (user.role == User.Role.ADMIN){
             out.print("<form action=\"" + request.getContextPath() + "\" method=\"post\">\n" +
+                    " Card number <input type=\"number\" name=\"number\" required/>"+
                     " <input type=\"hidden\" name=\"action\" value=\"unblock\" hidden/>\n" +
 
                     " <input type=\"submit\" value=\"Unblock\"/>\n" +
